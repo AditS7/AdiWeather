@@ -98,7 +98,7 @@ export default function App() {
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6 w-full relative z-20">
           <div className="flex flex-col">
             <h1 className="text-4xl font-light tracking-tight">
-              {selectedCity ? selectedCity.name : 'SkyCast'}
+              {selectedCity ? selectedCity.name : 'AddyWeather'}
             </h1>
             <span className="text-slate-400 text-sm tracking-widest uppercase mt-1">
               {selectedCity ? `${selectedCity.admin1 ? selectedCity.admin1 + ', ' : ''}${selectedCity.country}` : 'Weather Forecast'}
