@@ -1,4 +1,4 @@
-# 🌤️ MyWeather
+# 🌤️ AddyWeather
 
 A modern weather forecasting app with real-time updates and location-based data.
 
