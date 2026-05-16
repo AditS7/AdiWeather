@@ -24,7 +24,7 @@ A modern weather forecasting app with real-time updates and location-based data.
 
 1. **Clone the repository**
 ```bash
-   git clone https://github.com/adits7/myweather.git
+   git clone https://github.com/adits7/addyweather.git
    cd myweather
 ```
 
