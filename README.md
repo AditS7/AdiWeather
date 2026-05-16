@@ -51,7 +51,7 @@ A modern weather forecasting app with real-time updates and location-based data.
 
 ## Tech Stack
 
-- **Frontend:** React / Next.js
+- **Frontend:** React
 - **AI Integration:** Gemini API
 - **Styling:** CSS / Tailwind
 
