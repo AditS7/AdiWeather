@@ -1,20 +1,69 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 🌤️ AddyWeather
 
-# Run and deploy your AI Studio app
+A modern weather forecasting app with real-time updates and location-based data.
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/b22dc2e6-9fdf-4cc3-80c9-65003688233b
+## Features
 
-## Run Locally
+- 📍 Location-based weather detection
+- 🔄 Real-time weather updates
+- 🌡️ Current temperature, humidity, wind speed, and more
+- 📅 Multi-day forecast view
+- 🌙 Responsive design for all screen sizes
 
-**Prerequisites:**  Node.js
+---
 
+## Getting Started
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+
+### Installation
+
+1. **Clone the repository**
+```bash
+   git clone https://github.com/adits7/myweather.git
+   cd myweather
+```
+
+2. **Install dependencies**
+```bash
+   npm install
+```
+
+3. **Set up environment variables**
+
+   Create a `.env.local` file in the root directory and add your API key:
+```env
+   GEMINI_API_KEY=your_api_key_here
+```
+
+4. **Run the development server**
+```bash
+   npm run dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## Tech Stack
+
+- **Frontend:** React / Next.js
+- **AI Integration:** Gemini API
+- **Styling:** CSS / Tailwind
+
+---
+
+## Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
+
+---
+
+## License
+
+[MIT](LICENSE)
+
