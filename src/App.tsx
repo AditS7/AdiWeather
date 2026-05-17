@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Wind, Droplets, Thermometer, Loader2, Cloud, Sunrise, Sunset, CloudRain } from 'lucide-react';
+import { Search, Wind, Droplets, Thermometer, Loader2, Cloud, Sunrise, Sunset, CloudRain, Sun } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { searchCities, fetchWeather, GeocodingResult, WeatherData } from './services/weatherApi';
 import { getWeatherCondition } from './utils/weatherCodes';
@@ -12,24 +12,57 @@ export default function App() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [isLoadingWeather, setIsLoadingWeather] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [appInitialized, setAppInitialized] = useState(false);
   
   const searchRef = useRef<HTMLDivElement>(null);
 
-  // Default city on first load (London)
+  // Default city on first load
   useEffect(() => {
-    handleCitySelect({
-      id: 2643743,
-      name: "London",
-      latitude: 51.5085,
-      longitude: -0.12574,
-      elevation: 25,
-      feature_code: "PPLC",
-      country_code: "GB",
-      timezone: "Europe/London",
-      population: 8982000,
-      country: "United Kingdom",
-      admin1: "England"
-    });
+    const initApp = async () => {
+      // Start a minimum duration timer for the intro animation
+      const minWait = new Promise(resolve => setTimeout(resolve, 2500));
+      
+      try {
+        const response = await fetch('https://get.geojs.io/v1/ip/geo.json');
+        if (!response.ok) throw new Error("IP location failed");
+        const data = await response.json();
+        
+        await handleCitySelect({
+          id: 0,
+          name: data.city || "Unknown City",
+          latitude: parseFloat(data.latitude),
+          longitude: parseFloat(data.longitude),
+          elevation: 0,
+          feature_code: "PPLC",
+          country_code: data.country_code || "",
+          timezone: data.timezone || "",
+          population: 0,
+          country: data.country || "",
+          admin1: data.region || ""
+        });
+      } catch (err) {
+        console.warn("Failed to get IP location, falling back to London:", err);
+        // Fallback to London
+        await handleCitySelect({
+          id: 2643743,
+          name: "London",
+          latitude: 51.5085,
+          longitude: -0.12574,
+          elevation: 25,
+          feature_code: "PPLC",
+          country_code: "GB",
+          timezone: "Europe/London",
+          population: 8982000,
+          country: "United Kingdom",
+          admin1: "England"
+        });
+      }
+      
+      // Wait for at least 2.5 seconds before hiding the splash screen
+      await minWait;
+      setAppInitialized(true);
+    };
+    initApp();
   }, []);
 
   // Handle clicking outside of search dropdown
@@ -92,7 +125,67 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col p-6 md:p-10 font-sans overflow-x-hidden">
-      <div className="w-full max-w-5xl mx-auto flex-1 flex flex-col">
+      <AnimatePresence>
+        {!appInitialized && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, filter: "blur(10px)" }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 text-white"
+          >
+            <div className="relative flex items-center justify-center w-40 h-40">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
+                className="absolute"
+              >
+                 <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+                 >
+                   <Sun className="w-28 h-28 text-yellow-400 drop-shadow-[0_0_30px_rgba(250,204,21,0.6)]" fill="currentColor" />
+                 </motion.div>
+              </motion.div>
+              
+              <motion.div
+                initial={{ x: -30, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
+                className="absolute z-10 mr-8 mt-8"
+              >
+                <motion.div
+                  animate={{ y: [-5, 5, -5] }}
+                  transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                >
+                  <Cloud className="w-24 h-24 text-white drop-shadow-2xl" fill="currentColor" strokeWidth={1} />
+                </motion.div>
+              </motion.div>
+            </div>
+            
+            <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ delay: 0.6, duration: 0.6 }}
+               className="mt-8 text-center"
+            >
+              <h1 className="text-4xl md:text-5xl font-light tracking-tight mb-4">AddyWeather</h1>
+              <div className="flex items-center gap-3 justify-center">
+                 <Loader2 className="w-4 h-4 text-blue-400 animate-spin" />
+                 <span className="text-slate-400 uppercase tracking-widest text-xs font-semibold">Predicting the skies</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {appInitialized && (
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="w-full max-w-5xl mx-auto flex-1 flex flex-col"
+        >
         
         {/* Header & Search */}
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6 w-full relative z-20">
@@ -333,7 +426,8 @@ export default function App() {
           )}
         </AnimatePresence>
 
-      </div>
+        </motion.div>
+      )}
     </div>
   );
 }
