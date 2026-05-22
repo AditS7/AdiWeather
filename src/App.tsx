@@ -169,7 +169,7 @@ export default function App() {
                transition={{ delay: 0.6, duration: 0.6 }}
                className="mt-8 text-center"
             >
-              <h1 className="text-4xl md:text-5xl font-light tracking-tight mb-4">AddyWeather</h1>
+              <h1 className="text-4xl md:text-5xl font-light tracking-tight mb-4">AdiWeather</h1>
               <div className="flex items-center gap-3 justify-center">
                  <Loader2 className="w-4 h-4 text-blue-400 animate-spin" />
                  <span className="text-slate-400 uppercase tracking-widest text-xs font-semibold">Predicting the skies</span>
@@ -191,7 +191,7 @@ export default function App() {
         <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6 w-full relative z-50">
           <div className="flex flex-col">
             <h1 className="text-4xl font-light tracking-tight">
-              {selectedCity ? selectedCity.name : 'AddyWeather'}
+              {selectedCity ? selectedCity.name : 'AdiWeather'}
             </h1>
             <span className="text-slate-400 text-sm tracking-widest uppercase mt-1">
               {selectedCity ? `${selectedCity.admin1 ? selectedCity.admin1 + ', ' : ''}${selectedCity.country}` : 'Weather Forecast'}
