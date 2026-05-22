@@ -188,7 +188,7 @@ export default function App() {
         >
         
         {/* Header & Search */}
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6 w-full relative z-20">
+        <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6 w-full relative z-50">
           <div className="flex flex-col">
             <h1 className="text-4xl font-light tracking-tight">
               {selectedCity ? selectedCity.name : 'AddyWeather'}
@@ -198,7 +198,7 @@ export default function App() {
             </span>
           </div>
           
-          <div className="relative w-full md:w-96" ref={searchRef}>
+          <div className="relative w-full md:w-96 z-[100]" ref={searchRef}>
             <div className="flex items-center w-full px-4 py-3 rounded-full bg-white/10 border border-white/10 text-slate-100 focus-within:border-white/30 focus-within:bg-white/15 transition-all backdrop-blur-md">
               <Search className="w-5 h-5 text-slate-400 mr-2" />
               <input
@@ -219,18 +219,18 @@ export default function App() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-full mt-2 w-full rounded-2xl shadow-2xl border bg-slate-900 border-white/10 overflow-hidden z-30"
+                  className="absolute left-0 top-full mt-2 w-full rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.9)] border bg-slate-950 border-slate-700 overflow-hidden z-[100]"
                 >
-                  <ul>
+                  <ul className="divide-y divide-slate-800/50">
                     {searchResults.map((city) => (
                       <li key={city.id}>
                         <button
-                          className="w-full text-left px-4 py-3 flex items-center justify-between hover:bg-white/10 transition-colors"
+                          className="w-full text-left px-4 py-4 flex items-center hover:bg-slate-800 transition-colors bg-slate-950"
                           onClick={() => handleCitySelect(city)}
                         >
-                          <div>
-                            <span className="font-medium mr-2 text-slate-200">{city.name}</span>
-                            <span className="text-sm text-slate-400">
+                          <div className="flex flex-col min-w-0 overflow-hidden w-full">
+                            <span className="font-medium text-slate-100 truncate">{city.name}</span>
+                            <span className="text-sm text-slate-400 truncate">
                               {city.admin1 ? `${city.admin1}, ` : ''}{city.country}
                             </span>
                           </div>
